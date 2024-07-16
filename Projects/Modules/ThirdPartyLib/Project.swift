@@ -15,6 +15,8 @@ let project = Project.makeModule(
     dependencies: [
         .SPM.SnapKit,
         .SPM.Then,
-        .SPM.Moya
+        .SPM.Moya,
+        .SPM.RxSwift,
+        .SPM.RxCocoa
     ]
 )
