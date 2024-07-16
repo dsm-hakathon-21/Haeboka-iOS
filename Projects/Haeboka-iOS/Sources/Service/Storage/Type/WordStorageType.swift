@@ -7,8 +7,8 @@ protocol WordStorageType {
     @discardableResult
     func createWord(definition: String, meaning: String) -> Bool
     
-    @discardableResult
-    func wordList() -> Observable<[WordSectionModel]>
+//    @discardableResult
+//    func wordList() -> Observable<[WordSectionModel]>
     
     @discardableResult
     func update(word: Word, definition: String, meaning: String) -> Observable<Word>
