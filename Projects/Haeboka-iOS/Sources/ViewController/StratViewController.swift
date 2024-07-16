@@ -1,6 +1,8 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 import DesignSystem
 
 class StratViewController: BaseVC {
@@ -21,13 +23,14 @@ class StratViewController: BaseVC {
 
     private lazy var mainLogo = UIImageView().then {
         $0.image = UIImage(named: "ImportLogo")
+        $0.backgroundColor = .red
     }
 
     private lazy var existingAccountButton = UIButton().then {
         $0.setTitle("기존의 계정으로 계속하기", for: .normal)
         $0.setTitleColor(UIColor.White, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 16.0, weight: .medium)
-        $0.backgroundColor = .Primary
+        $0.backgroundColor = .MainGreen
         $0.layer.cornerRadius = 8.0
     }
 
@@ -80,5 +83,27 @@ class StratViewController: BaseVC {
             $0.centerX.equalTo(existingAccountButton.snp.centerX)
             $0.top.equalTo(existingAccountButton.snp.bottom)
         }
+    }
+
+    override func touchEvent() {
+        super.touchEvent()
+
+        existingAccountButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind {
+                if self.navigationController?.viewControllers.contains(where: { $0 is LoginViewController }) == false {
+                    print("Navigating to LoginViewController")
+                    self.navigationController?.pushViewController(LoginViewController(), animated: true)
+                }
+            }.disposed(by: disposeBag)
+
+        newAccountButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind {
+                if self.navigationController?.viewControllers.contains(where: { $0 is SignUpFirstViewController }) == false {
+                    print("Navigating to SignUpFirstViewController")
+                    self.navigationController?.pushViewController(SignUpFirstViewController(), animated: true)
+                }
+            }.disposed(by: disposeBag)
     }
 }
