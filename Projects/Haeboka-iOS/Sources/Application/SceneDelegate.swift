@@ -14,7 +14,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func start() {
-        window?.rootViewController = BaseNC(rootViewController: StratViewController())
+        window?.rootViewController = BaseNC(rootViewController: TapBarViewController())
         window?.makeKeyAndVisible()
     }
 
