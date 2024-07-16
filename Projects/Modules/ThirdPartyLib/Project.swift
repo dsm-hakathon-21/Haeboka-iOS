@@ -14,7 +14,6 @@ let project = Project.makeModule(
     packages: [],
     dependencies: [
         .SPM.SnapKit,
-        .SPM.Kingfisher,
         .SPM.Then,
         .SPM.Moya
     ]

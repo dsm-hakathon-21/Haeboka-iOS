@@ -1,4 +1,6 @@
 import UIKit
+import Core
+import DesignSystem
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -12,7 +14,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func start() {
-        window?.rootViewController = UINavigationController(rootViewController: ViewController())
+        window?.rootViewController = BaseNC(rootViewController: StratViewController())
         window?.makeKeyAndVisible()
     }
 
