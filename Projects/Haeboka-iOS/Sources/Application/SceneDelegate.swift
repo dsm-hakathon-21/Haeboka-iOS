@@ -14,7 +14,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func start() {
-        window?.rootViewController = BaseNC(rootViewController: MyPageViewController())
+        window?.rootViewController = BaseNC(rootViewController: TranslateViewController())
         window?.makeKeyAndVisible()
     }
 
