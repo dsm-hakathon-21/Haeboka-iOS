@@ -14,5 +14,6 @@ let project = Project.makeModule(
     product: .staticFramework,
     dependencies: [
         .Project.ThirdPartyLib
-    ]
+    ],
+    resources: ["Resources/**"]
 )
