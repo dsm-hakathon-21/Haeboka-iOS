@@ -100,7 +100,9 @@ class StratViewController: BaseVC {
         newAccountButton.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind {
-                if self.navigationController?.viewControllers.contains(where: { $0 is SignUpFirstViewController }) == false {
+                if self.navigationController?.viewControllers.contains(
+                    where: { $0 is SignUpFirstViewController }
+                ) == false {
                     print("Navigating to SignUpFirstViewController")
                     self.navigationController?.pushViewController(SignUpFirstViewController(), animated: true)
                 }

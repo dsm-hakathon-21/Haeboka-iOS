@@ -12,7 +12,7 @@ extension UIColor {
 }
 
 open class BaseSV: BaseVC {
-    
+
     public let attributes = [NSAttributedString.Key.foregroundColor: UIColor.gray,
                       .font : UIFont.systemFont(ofSize: 14, weight: .bold)]
 
