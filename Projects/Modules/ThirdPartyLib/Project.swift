@@ -18,6 +18,7 @@ let project = Project.makeModule(
         .SPM.Moya,
         .SPM.RxSwift,
         .SPM.RxCocoa,
+        .SPM.RxDataSources,
         .SPM.KeychainSwift
     ]
 )
