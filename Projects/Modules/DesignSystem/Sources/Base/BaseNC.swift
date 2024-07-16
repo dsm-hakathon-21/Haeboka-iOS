@@ -1,4 +1,5 @@
 import UIKit
+import Core
 
 open class BaseNC: UINavigationController {
 
@@ -27,7 +28,7 @@ open class BaseNC: UINavigationController {
     open func setNavigationBarAppearance() {
         let appearance = UINavigationBarAppearance()
         let appearance2 = UINavigationBarAppearance()
-        navigationBar.tintColor = UIColor.red
+        navigationBar.tintColor = UIColor.MainGreen
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance2.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance.backgroundColor = UIColor.clear

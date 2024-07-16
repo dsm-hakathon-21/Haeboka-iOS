@@ -45,6 +45,7 @@ public extension UIColor {
 
     static let Green = UIColor(hex: "#00FF00")
     static let Green100 = UIColor(hex: "#CCFFCC")
+    static let MainGreen = UIColor(hex: "#335E54")
 
     static let Red = UIColor(hex: "#FF0000")
     static let Red100 = UIColor(hex: "#FFCCCC")

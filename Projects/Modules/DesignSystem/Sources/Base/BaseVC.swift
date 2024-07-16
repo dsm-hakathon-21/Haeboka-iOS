@@ -5,8 +5,12 @@ import SnapKit
 
 import Moya
 
+import RxSwift
+import RxCocoa
+
 open class BaseVC: UIViewController {
-    let bound = UIScreen.main.bounds
+    public let bound = UIScreen.main.bounds
+    public let disposeBag = DisposeBag()
 
     open override func viewDidLayoutSubviews() { self.layout() }
 
