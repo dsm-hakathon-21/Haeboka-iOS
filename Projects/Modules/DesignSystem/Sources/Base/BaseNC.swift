@@ -1,5 +1,6 @@
 import UIKit
 import Core
+import Then
 
 open class BaseNC: UINavigationController {
 
@@ -26,19 +27,23 @@ open class BaseNC: UINavigationController {
     }
 
     open func setNavigationBarAppearance() {
-        let appearance = UINavigationBarAppearance()
-        let appearance2 = UINavigationBarAppearance()
-        navigationBar.tintColor = UIColor.MainGreen
-        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-        appearance2.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-        appearance.backgroundColor = UIColor.clear
+        let appearance = UINavigationBarAppearance().then {
+            $0.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+            $0.backgroundColor = UIColor.clear
+            $0.configureWithTransparentBackground()
+            $0.backButtonAppearance = backButtonAppearance
 
-        appearance.configureWithTransparentBackground()
-        appearance2.configureWithDefaultBackground()
-        appearance.backButtonAppearance = backButtonAppearance
-        appearance2.backButtonAppearance = backButtonAppearance
-        navigationBar.standardAppearance = appearance2
+        }
+        let appearance2 = UINavigationBarAppearance().then {
+            $0.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+
+            $0.configureWithDefaultBackground()
+            $0.backButtonAppearance = backButtonAppearance
+        }
+
+        navigationBar.tintColor = UIColor.MainGreen
         navigationController?.setNeedsStatusBarAppearanceUpdate()
+        navigationBar.standardAppearance = appearance2
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
         self.navigationController?.navigationBar.backItem?.title = nil
