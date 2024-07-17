@@ -9,7 +9,7 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import UtilityPlugin
 
-let project = Project.makeModule(
+let project = Project.mainModule(
     name: "Haeboka-iOS",
     platform: .iOS,
     product: .app,
@@ -18,5 +18,6 @@ let project = Project.makeModule(
         .Project.DesignSystem
     ],
     resources: ["Resources/**"],
-    infoPlist: .extendingDefault(with: Project.baseinfoPlist)
+    infoPlist: .extendingDefault(with: Project.baseinfoPlist),
+    coreDataModels: [.init("Sources/Service/Model/JAGIJUDO.xcdatamodeld")]
 )

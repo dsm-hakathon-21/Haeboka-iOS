@@ -1,4 +1,7 @@
 import RxSwift
+import RxDataSources
+
+typealias WordSectionModel = AnimatableSectionModel<Int, Word>
 
 protocol WordStorageType {
     var title: String { get }
