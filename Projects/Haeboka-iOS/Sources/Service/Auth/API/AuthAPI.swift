@@ -7,7 +7,7 @@ import Core
 public enum AuthAPI {
     case sendMail(target: String)
     case mailCheck(target: String, code: String)
-    case signup(nickName: String, password: String, email: String)
+    case signup(nickName: String, password: String)
     case login(nickName: String, password: String)
 }
 
@@ -49,12 +49,11 @@ extension AuthAPI: TargetType {
                     "code": code
                 ], encoding: URLEncoding.queryString
             )
-        case let .signup(nickName, password, email):
+        case let .signup(nickName, password):
             return .requestParameters(
                 parameters: [
                         "nickname": nickName,
-                        "password": password,
-                        "email": email
+                        "password": password
                 ],
                 encoding: JSONEncoding.default
             )
