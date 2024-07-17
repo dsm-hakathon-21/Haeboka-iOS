@@ -12,6 +12,10 @@ extension UIColor {
 }
 
 open class BaseSV: BaseVC {
+    
+    public var buttonTap: ControlEvent<Void> {
+        return loginFirstNextButton.rx.tap
+    }
 
     public let attributes = [NSAttributedString.Key.foregroundColor: UIColor.gray,
                       .font : UIFont.systemFont(ofSize: 14, weight: .bold)]
