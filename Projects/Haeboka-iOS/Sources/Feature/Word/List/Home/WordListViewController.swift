@@ -69,6 +69,12 @@ class WordListViewController: BaseVC {
         $0.numberOfLines = 2
     }
     
+    private var words: [Word] = [
+        Word(definition: "Bonjour", meaning: "Hello in French", parentIdentity: "French Vocabulary"),
+        Word(definition: "Hola", meaning: "Hello in Spanish", parentIdentity: "Spanish Verbs"),
+        Word(definition: "Guten Tag", meaning: "Good day in German", parentIdentity: "German Phrases")
+    ]
+    
     override func attribute() {
          super.attribute()
         
@@ -225,16 +231,17 @@ class WordListViewController: BaseVC {
 
 extension WordListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
+         return words.count
+     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: WordListTableViewCell.identifier, for: indexPath) as? WordListTableViewCell else {
-            return UITableViewCell()
-        }
-        
-        return cell
-    }
+         guard let cell = tableView.dequeueReusableCell(withIdentifier: WordListTableViewCell.identifier, for: indexPath) as? WordListTableViewCell else {
+             return UITableViewCell()
+         }
+         let word = words[indexPath.row]
+         cell.configure(with: word)
+         return cell
+     }
 
 }
 

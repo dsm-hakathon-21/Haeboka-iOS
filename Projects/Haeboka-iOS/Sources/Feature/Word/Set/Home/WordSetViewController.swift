@@ -111,31 +111,46 @@ class WordSetViewController: BaseVC {
           return ds
       }()
         
-      var wordSetList: Observable<[WordSetSectionModel]> {
-          return storage?.setList()
-              .map { wordSetList -> [WordSetSectionModel] in
-                  var sectionModels: [WordSetSectionModel] = []
-                  
-                  wordSetList.forEach { wordSet in
-                      let sectionModel = WordSetSectionModel(model: wordSet.title, items: [wordSet])
-                      sectionModels.append(sectionModel)
-                  }
-                  
-                  return sectionModels
-              } ?? Observable.just([.init(model: "더미", items: [.init(title: "더미값")])])
-      }
+//      var wordSetList: Observable<[WordSetSectionModel]> {
+//          return storage?.setList()
+//              .map { wordSetList -> [WordSetSectionModel] in
+//                  var sectionModels: [WordSetSectionModel] = []
+//                  
+//                  wordSetList.forEach { wordSet in
+//                      let sectionModel = WordSetSectionModel(model: wordSet.title, items: [wordSet])
+//                      sectionModels.append(sectionModel)
+//                  }
+//                  
+//                  return sectionModels
+//              } ?? Observable.just([.init(model: "더미", items: [.init(title: "더미값")])])
+//      }
+    var wordSetList: Observable<[WordSetSectionModel]> {
+        let initialData = [
+            WordSet(title: "Spanish Verbs", insertDate: Date(timeIntervalSinceNow: -86400)),
+            WordSet(title: "French Vocabulary", insertDate: Date(timeIntervalSinceNow: -172800)),
+            WordSet(title: "German Phrases", insertDate: Date(timeIntervalSinceNow: -259200))
+        ]
+        
+        let sectionModels = initialData.map { wordSet -> WordSetSectionModel in
+            WordSetSectionModel(model: wordSet.title, items: [wordSet])
+        }
+        
+        return Observable.just(sectionModels)
+    }
+    
     override func bind() {
         createButton.rx.tap
-            .bind(onNext: { [weak self] in
-                self?.present(WordSetCreateViewController(), animated: true)
-            }).disposed(by: disposeBag)
+                    .bind(onNext: { [weak self] in
+                        self?.present(WordSetCreateViewController(), animated: true)
+                    }).disposed(by: disposeBag)
         
         //        setTableView.rx.setDataSource(data)
         //            .disposed(by: disposeBag)
         setTableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+                    .disposed(by: disposeBag)
         
-        self.wordSetList.bind(to: setTableView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+        self.wordSetList.bind(to: setTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
         
         self.wordSetList
             .bind(
@@ -148,28 +163,32 @@ class WordSetViewController: BaseVC {
         
 //        tableView.deselectRow(at: indexPath, animated: true)
 //        coordinator.push(at: .main, scene: .list, title: model.title, model: model.identity, animated: true)
+//        Observable.zip(setTableView.rx.modelSelected(WordSet.self), setTableView.rx.itemSelected)
+//            .bind(
+//                with: self,
+//                onNext: { owner, event in
+//                    owner.setTableView.deselectRow(at: event.1, animated: true)
+//                    let vc = WordListViewController()
+////                    vc.
+//                    owner.navigationController?.pushViewController(vc, animated: true)
+//                    
+////                    owner.wordSetList.modelSelected(tableView: owner.setTableView, model: event.0, indexPath: event.1)
+//                }
+//            )
+//            .disposed(by: disposeBag)
         Observable.zip(setTableView.rx.modelSelected(WordSet.self), setTableView.rx.itemSelected)
-            .bind(
-                with: self,
-                onNext: { owner, event in
-                    owner.setTableView.deselectRow(at: event.1, animated: true)
-                    let vc = WordListViewController()
-//                    vc.
-                    owner.navigationController?.pushViewController(vc, animated: true)
-                    
-//                    owner.wordSetList.modelSelected(tableView: owner.setTableView, model: event.0, indexPath: event.1)
-                }
-            )
-            .disposed(by: disposeBag)
+                   .bind { [weak self] (model, indexPath) in
+                       self?.setTableView.deselectRow(at: indexPath, animated: true)
+                       let vc = WordListViewController()
+                       self?.navigationController?.pushViewController(vc, animated: true)
+                   }
+                   .disposed(by: disposeBag)
         
         setTableView.rx.modelDeleted(WordSet.self)
-            .bind(
-                with: self,
-                onNext: { owner, wordSet in
-                    owner.storage?.delete(set: wordSet)
-                }
-            )
-            .disposed(by: disposeBag)
+                    .bind { [weak self] wordSet in
+                        self?.storage?.delete(set: wordSet)
+                    }
+                    .disposed(by: disposeBag)
         
 //        setTableView.rx.itemMoved
 //            .bind(
