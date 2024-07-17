@@ -68,3 +68,6 @@ Derived/
 
 ### Tuist managed dependencies ###
 Tuist/Dependencies
+
+Projects/Haeboka-iOS/Sources/Service/혜/API/GPTAPI.swift
+
