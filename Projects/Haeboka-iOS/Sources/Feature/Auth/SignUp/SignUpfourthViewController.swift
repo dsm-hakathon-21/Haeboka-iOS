@@ -4,6 +4,7 @@ import RxSwift
 import RxCocoa
 import Then
 import DesignSystem
+import Moya
 
 class SignUpfourthViewController: BaseSV {
 
@@ -26,6 +27,23 @@ class SignUpfourthViewController: BaseSV {
     override func attribute() {
         self.view.backgroundColor = .systemBackground
     }
+    func api() {
+        let provider = MoyaProvider<AuthAPI>(plugins: [MoyaLoggerPlugin()])
+        
+        provider.request(.signup(nickName: firstTextField.text!, password: secondTextField.text!)) { res in
+            switch res {
+            case.success(let result):
+                switch result.statusCode {
+                case 200...299:
+                    print("success")
+                default:
+                    print("fail")
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+        }
+    }
 
     override func touchEvent() {
         super.touchEvent()
@@ -37,5 +55,6 @@ class SignUpfourthViewController: BaseSV {
                     self.navigationController?.pushViewController(SignUpRestSixthViewController(), animated: true)
                 }
             }.disposed(by: disposeBag)
+        
     }
 }
