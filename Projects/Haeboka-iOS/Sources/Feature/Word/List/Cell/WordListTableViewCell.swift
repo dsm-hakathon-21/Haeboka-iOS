@@ -73,6 +73,16 @@ class WordListTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public func configure(with word: Word) {
+         definitionLabel.text = word.definition
+         flipDefinitionLabel.text = word.definition
+         flipMeaningLabel.text = word.meaning
+
+         setComplete(word.complete)
+
+         flipCardView.isHidden = (word.complete == 0)
+     }
         
     private func configureUI() {
         backgroundColor = .systemBackground
@@ -157,9 +167,7 @@ class WordListTableViewCell: UITableViewCell {
             checkMarkImageView.isHidden = true
         }
     }
-    
-    // MARK: - Action
-    
+
     func flip() {
         UIView.transition(with: cardView, duration: 0.3, options: .transitionCrossDissolve) { [weak self] in
             if let cardView = self?.cardView {
