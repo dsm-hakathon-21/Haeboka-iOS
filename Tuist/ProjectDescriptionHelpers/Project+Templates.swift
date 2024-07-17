@@ -35,8 +35,62 @@ public extension Project {
             infoPlist: infoPlist,
             sources: sources,
             resources: resources,
-            scripts: [.SwiftLintString],
+//            scripts: [.SwiftLintString],
             dependencies: dependencies
+            
+        )
+        
+        let targets: [Target] = [appTarget]
+        let schemes: [Scheme] = [.makeScheme(target: .debug, name: name)]
+        
+        return Project(
+            name: name,
+            organizationName: organizationName,
+            packages: packages,
+            settings: settings,
+            targets: targets,
+            schemes: schemes
+        )
+    }
+    
+    static func mainModule(
+        name: String,
+        platform: Platform = .iOS,
+        product: Product,
+        organizationName: String = "Haeboka-iOS",
+        packages: [Package] = [],
+        deploymentTarget: DeploymentTarget? = .iOS(targetVersion: "14.0", devices: [.iphone, .ipad]),
+        dependencies: [TargetDependency] = [],
+        sources: SourceFilesList = ["Sources/**"],
+        resources: ResourceFileElements? = nil,
+        infoPlist: InfoPlist = .default,
+        coreDataModels: [CoreDataModel?] = []
+    ) -> Project {
+        
+        let settings: Settings = .settings(
+            base:
+                product == .app ? .init().setCodeSignManualForApp() : .init().setCodeSignManual(),
+            debug: .init()
+                .setProvisioningDevelopment(),
+            release: .init()
+                .setProvisioningAppstore(),
+            defaultSettings: .recommended)
+        
+        let bundleId = (name == "Haeboka-iOS") ? "com.haeboka-iOS.release" : "\(organizationName).\(name)"
+        
+        let appTarget = Target(
+            name: name,
+            platform: platform,
+            product: product,
+            bundleId: bundleId,
+            deploymentTarget: deploymentTarget,
+            infoPlist: infoPlist,
+            sources: sources,
+            resources: resources,
+            dependencies: dependencies,
+            coreDataModels: [
+                CoreDataModel("Sources/Service/Model/JAGIJUDO.xcdatamodeld"),
+            ]
         )
         
         let targets: [Target] = [appTarget]

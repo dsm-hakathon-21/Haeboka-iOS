@@ -14,8 +14,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func start() {
-        window?.rootViewController = VideoViewController()
-        
+        window?.rootViewController = BaseNC(rootViewController: WordSetViewController())
         window?.makeKeyAndVisible()
     }
 
