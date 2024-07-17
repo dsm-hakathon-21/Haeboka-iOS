@@ -19,7 +19,7 @@ public enum EducationAPI {
 
 extension EducationAPI: TargetType {
     public var baseURL: URL {
-        return URL(string: "fjkdsl")!
+        return URL(string: "http://3.39.152.98:8080")!
     }
     
     public var path: String {
